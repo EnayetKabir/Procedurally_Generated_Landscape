@@ -16,20 +16,19 @@ int offsetX = 0, offsetY = 0, clickX = 0, clickY = 0, zoom = -280;
 float rotationX = 0, rotationZ = 0, targetRotationX = -PI/3, targetRotationZ = 0, clickRotationX, clickRotationZ; 
 float rotY = 0;
 
-// ------ mesh coloring ------
-color midColor, topColor, bottomColor;
-color strokeColor;
-float threshold = 0.30;
-
+//mesh coloring & animation
 float aOff = 0.0;
 float bOff = 1000;
 float cOff = 100000;
+boolean melt = false;
+boolean cam = false;
+boolean pretty = false;
+
+
+
 
 void setup() {
   size(800, 800, P3D);
-  topColor = color(0, 0, 100);
-  midColor = color(191, 99, 63);
-  bottomColor = color(0, 0, 0);
 }
 
 void draw() {
@@ -42,9 +41,11 @@ void draw() {
   float c3 = map(noise(cOff), 0, 1, 0, 255);
 
   //animate color noise
+  if (pretty) {
   aOff += 0.001;
   bOff += 0.001;
   cOff += 0.001;
+  }
 
 
   ambientLight(c1, c2, c3);
@@ -110,9 +111,14 @@ void draw() {
   popMatrix();
 
   //move camera around z-axis
+  if (cam) {
   targetRotationZ += 0.006;
+  }
+
   //animate mesh
-  zOff += 0.005;
+  if (melt) {
+    zOff += 0.005;
+  }
 }
 
 void mousePressed() {
@@ -138,5 +144,8 @@ void keyPressed() {
 
 void keyReleased() {  
   if (key == ' ') noiseSeed((int) random(100000));
+  if (key == 'm' || key == 'M') melt = !melt;
+  if (key == 'c' || key == 'C') cam = !cam;
+  if (key == 'p' || key == 'P') pretty = !pretty;
 }
 
