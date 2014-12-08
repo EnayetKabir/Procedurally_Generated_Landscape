@@ -9,6 +9,7 @@ int noiseXRange = 10;
 int noiseYRange = 10;
 int octaves = 4;
 float falloff = 0.5;
+float zOff = 0.0;
 
 //mouse interaction and view settings
 int offsetX = 0, offsetY = 0, clickX = 0, clickY = 0, zoom = -280;
@@ -88,8 +89,8 @@ void draw() {
 
       float noiseX = map(meshX, 0, tileCount, 0, noiseXRange);
       float noiseY = map(meshY, 0, tileCount, 0, noiseYRange);
-      float z1 = noise(noiseX, noiseY);
-      float z2 = noise(noiseX, noiseY+noiseStepY);
+      float z1 = noise(noiseX, noiseY, zOff);
+      float z2 = noise(noiseX, noiseY+noiseStepY, zOff);
 
       //
       //      color interColor;
@@ -109,7 +110,9 @@ void draw() {
   popMatrix();
 
   //move camera around z-axis
-  targetRotationZ += 0.01;
+  targetRotationZ += 0.006;
+  //animate mesh
+  zOff += 0.005;
 }
 
 void mousePressed() {
