@@ -12,7 +12,7 @@ float falloff = 0.5;
 float zOff = 0.0;
 
 //mouse interaction and view settings
-int offsetX = 0, offsetY = 0, clickX = 0, clickY = 0, zoom = -280;
+int offsetX = 0, offsetY = 0, clickX = 0, clickY = 0, zoom = 0;
 float rotationX = 0, rotationZ = 0, targetRotationX = -PI/3, targetRotationZ = 0, clickRotationX, clickRotationZ; 
 float rotY = 0;
 
@@ -53,7 +53,7 @@ void draw() {
 
   //view
   pushMatrix();
-  translate(width*0.5, height*0.5, 0);
+  translate(width*0.5, height*0.5, zoom);
   scale(2.3);
   if (mousePressed && mouseButton==RIGHT) {
     offsetX = mouseX-clickX;
